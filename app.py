@@ -2,7 +2,7 @@ import pandas as pd
 import openai
 import numpy as np
 import pickle
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 openai.api_key = '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'
 
@@ -158,10 +158,12 @@ from flask import Flask, request
 
 app = Flask(__name__)
 CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 bots = {}
 
 @app.route('/api', methods=['POST'])
+@cross_origin()
 def handle_json():
     json_data = request.get_json()
     session_id = json_data['session']
