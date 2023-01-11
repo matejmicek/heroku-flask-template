@@ -2,6 +2,7 @@ import pandas as pd
 import openai
 import numpy as np
 import pickle
+from flask_cors import CORS
 
 openai.api_key = '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'
 
@@ -156,7 +157,7 @@ class GPTBot:
 from flask import Flask, request
 
 app = Flask(__name__)
-
+CORS(app)
 
 bots = {}
 

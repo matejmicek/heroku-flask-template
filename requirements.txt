@@ -2,3 +2,4 @@ openai
 pandas
 numpy
 pickle5
+flask-cors
