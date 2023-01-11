@@ -164,22 +164,12 @@ bots = {}
 def handle_json():
     json_data = request.get_json()
     session_id = json_data['session']
-    question = json_data['queryResult']['queryText']
+    question = json_data['question']
     if session_id not in bots:
         bots[session_id] = GPTBot()
     bot = bots[session_id]
     response = bot.respond_to(question)
-    return {
-        "fulfillmentMessages": [
-            {
-            "text": {
-                "text": [
-                    response
-                ]
-            }
-            }
-        ]
-        }
+    return response
 
 
 
