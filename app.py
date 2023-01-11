@@ -3,7 +3,7 @@ import openai
 import numpy as np
 import pickle
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 COMPLETIONS_MODEL = "text-davinci-003"
 
