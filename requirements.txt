@@ -1,7 +1,4 @@
-Flask
-Flask-RESTful
-gunicorn
-itsdangerous
-Jinja2
-peewee
-Werkzeug
+openai
+pandas
+numpy
+pickle5
