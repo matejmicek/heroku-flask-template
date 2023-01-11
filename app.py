@@ -3,8 +3,9 @@ import openai
 import numpy as np
 import pickle
 from flask_cors import CORS, cross_origin
+import os
 
-openai.api_key = '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'
+openai.api_key = os.environ['OPENAI']
 
 COMPLETIONS_MODEL = "text-davinci-003"
 
