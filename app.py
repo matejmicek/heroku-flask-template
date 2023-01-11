@@ -158,12 +158,10 @@ from flask import Flask, request
 
 app = Flask(__name__)
 CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 bots = {}
 
 @app.route('/api', methods=['POST'])
-@cross_origin()
 def handle_json():
     json_data = request.get_json()
     session_id = json_data['session']
