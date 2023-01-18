@@ -162,6 +162,7 @@ class GPTBot:
                     prompt=prompt,
                     **COMPLETIONS_API_PARAMS
                 )
+        response = response["choices"][0]["text"].strip(" \n")
         self.all_questions.append('A: ' + response)
         return response
 
