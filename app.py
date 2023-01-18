@@ -110,11 +110,11 @@ COMPLETIONS_API_PARAMS = {
 
 
 def format_answer(response, sources):
-    sources = [f'{confidence*100:.2f}: {title}: {url}' for confidence, title, url in sources]
+    sources = [f'{title} ({url})' for confidence, title, url in sources]
 
     simple_answer = response["choices"][0]["text"].strip(" \n")
 
-    return simple_answer.lstrip() + '\n\nMy answer is based on these sources:\n- ' + '\n- '.join(sources), simple_answer
+    return simple_answer.lstrip() + '\n\nMy answer is based on these sources:\n- ' + '\n'.join(sources), simple_answer
 
 
 DF = pd.read_csv('all_biz.csv')
