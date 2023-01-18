@@ -125,7 +125,6 @@ class GPTBot:
         self.all_questions = []
         self.chosen_sections = []
         self.sources = []
-        print(f'The dataset has {len(self.df)} entries')
         # self.document_embeddings = compute_doc_embeddings(self.df)
         # with open('embeddings.pickle', 'wb') as handle:
         #     pickle.dump(self.document_embeddings, handle, protocol=pickle.HIGHEST_PROTOCOL)
