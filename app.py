@@ -5,7 +5,7 @@ import pickle
 from flask_cors import CORS, cross_origin
 import os
 
-openai.api_key = os.environ['OPENAI']
+openai.api_key = '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'
 
 COMPLETIONS_MODEL = "text-davinci-003"
 
@@ -158,7 +158,7 @@ class GPTBot:
 from flask import Flask, request
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 bots = {}
 
@@ -171,7 +171,8 @@ def handle_json():
         bots[session_id] = GPTBot()
     bot = bots[session_id]
     response = bot.respond_to(question)
-    return response
+    print(response)
+    return {'data': response}
 
 
 
