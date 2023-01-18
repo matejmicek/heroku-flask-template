@@ -154,7 +154,7 @@ class GPTBot:
 
     def responde_to_simple(self, context, user_question):
         question = 'Q: ' + user_question
-        header = f'contexxt = {context}\nThe following is a onversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. If the user asks a question that is rude, the assistant will say "We are sorry you feel that way. We hope to live to our values in the future.". The AI assistant can only answer questions if they can be answered in the context above. Otherwise state that that information has not been provided but suggest other questions that can be answered. \n'
+        header = f'context = {context}\nThe following is a onversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. If the user asks a question that is rude, the assistant will say "We are sorry you feel that way. We hope to live to our values in the future.". The AI assistant can only answer questions if they can be answered in the context above. Otherwise state that that information has not been provided but suggest other questions that can be answered. \n'
         self.all_questions.append(question)
         prompt = header + '\n'.join(self.all_questions) + "\n A:"
         print(prompt)
