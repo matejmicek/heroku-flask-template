@@ -117,14 +117,14 @@ def format_answer(response, sources):
     return simple_answer.lstrip() + '\n\nMy answer is based on these sources:\n- ' + '\n- '.join(sources), simple_answer
 
 
+DF = pd.read_csv('all_biz.csv')
+DF = DF.set_index(["title", 'url'])
 
 class GPTBot:
     def __init__(self):
         self.all_questions = []
         self.chosen_sections = []
         self.sources = []
-        self.df = pd.read_csv('all_biz.csv')
-        self.df = self.df.set_index(["title", 'url'])
         print(f'The dataset has {len(self.df)} entries')
         # self.document_embeddings = compute_doc_embeddings(self.df)
         # with open('embeddings.pickle', 'wb') as handle:
@@ -142,7 +142,7 @@ class GPTBot:
             previous_chosen_sections = self.chosen_sections,
             previous_sources = self.sources,
             context_embeddings = self.document_embeddings,
-            df = self.df
+            df = DF
         )
         
         response = openai.Completion.create(
@@ -152,6 +152,12 @@ class GPTBot:
         answer, simple_answer = format_answer(response, self.sources)
         self.all_questions.append('A: ' + simple_answer)
         return answer
+
+    def responde_to_simple(self, context, user_question):
+        header = f'contexxt = {context}\nThe following is a onversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. If the user asks a question that is rude, the assistant will say "We are sorry you feel that way. We hope to live to our values in the future.". The AI assistant can only answer questions if they can be answered in the context above. Otherwise state that that information has not been provided but suggest other questions that can be answered. \n'
+        all_questions = self.all_questions.append(user_question)
+        return header + '\n'.join(all_questions) + "\n A:"
+
 
 
 
@@ -167,13 +173,26 @@ def handle_json():
     json_data = request.get_json()
     session_id = json_data['session']
     question = json_data['question']
+    context = json_data['context']
     if session_id not in bots:
         bots[session_id] = GPTBot()
     bot = bots[session_id]
-    response = bot.respond_to(question)
+    if context == 'revolut':
+        response = bot.respond_to(question)
+    else:
+        response = bot.responde_to_simple(context, question)
     print(response)
     return {'data': response}
 
 
 
 if __name__ == '__main__': app.run(debug=True)
+
+
+'''
+Context: ${context} \n
+    The following is a onversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. If the user asks a question that is rude, the assistant will say "We are sorry you feel that way. We hope to live to our values in the future.". The AI assistant can only answer questions if they can be answered in the context above. Otherwise state that that information has not been provided but suggest other questions that can be answered. \n
+    Q: ${question} \n
+    A:
+
+'''
